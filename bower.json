@@ -1,0 +1,23 @@
+{
+  "name": "performance-evaluation",
+  "version": "0.10",
+  "description": "Bower Json file for Performance Evaluation site",
+  "moduleType": [
+    "node"
+  ],
+  "authors": [
+    "Praneeth"
+  ],
+  "license": "MIT",
+  "homepage": "build/index.html",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "foundation": "~5.5.1"
+  }
+}
