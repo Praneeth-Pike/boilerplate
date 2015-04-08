@@ -5,9 +5,28 @@ var gulp = require('gulp');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
-var sass = require('gulp-ruby-sass');
+var sass = require('gulp-sass');
 var imagemin = require('gulp-imagemin');
 var cache = require('gulp-cache');
+var browserSync = require('browser-sync');
+var reload = browserSync.reload;
+
+//static server + watching scss/html files
+gulp.task('serve', ['sass'], function () {
+    'use strict';
+    browserSync({
+        server: {
+            baseDir: "./"
+        },
+        files: "./src/scss/*.scss"
+    });
+    gulp.watch("*.scss", ['sass']);
+    gulp.watch("*.html").on('change', reload);
+    
+});
+
+
+
 //Concatenate & Minify JS files
 gulp.task('scripts', function () {
     'use strict';
@@ -22,10 +41,12 @@ gulp.task('scripts', function () {
 gulp.task('sass', function () {
     'use strict';
     return gulp
-        .src('src/scss/style.scss')
+        .src('src/scss/*.scss')
         .pipe(rename({suffix: '.min'}))
+        .pipe(sass())
         //.pipe(sass({style: 'compressed'}))
-        .pipe(gulp.dest('build/css'));
+        .pipe(gulp.dest('build/css'))
+        .pipe(reload({stream: true}));
 });
 //Image Optimization
 gulp.task('images', function () {
@@ -36,5 +57,14 @@ gulp.task('images', function () {
         .pipe(gulp.dest('build/img'));
 });
 
+//Watch files for Changes
+gulp.task('watch', function () {
+    'use strict';
+    gulp.watch('src/scss/*.scss', ['sass']);
+    
+    /*Trigger a live reload on any changes*/
+    
+});
+
 //Default Task
-gulp.task('default', ['scripts', 'sass', 'images']);
+gulp.task('default', ['scripts', 'sass', 'watch', 'images', 'serve']);
