@@ -31,11 +31,11 @@ gulp.task('serve', ['sass'], function () {
 gulp.task('scripts', function () {
     'use strict';
     return gulp
-        .src('src/js/*.js')
-        .pipe(concat('main.js'))
+        .src('./src/js/*.js')
+        .pipe(concat('app.js'))
         .pipe(rename({suffix: '.min'}))
         .pipe(uglify())
-        .pipe(gulp.dest('build/js'));
+        .pipe(gulp.dest('./build/js'));
 });
 //Css Compiler
 gulp.task('sass', function () {
@@ -52,7 +52,7 @@ gulp.task('sass', function () {
 gulp.task('images', function () {
     'use strict';
     return gulp
-        .src('src/images/**/*')
+        .src('src/img/**/*')
         .pipe(cache(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
         .pipe(gulp.dest('build/img'));
 });
